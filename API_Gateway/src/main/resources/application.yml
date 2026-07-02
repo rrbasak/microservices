@@ -1,0 +1,52 @@
+server:
+  port: 9095
+
+spring:
+  banner:
+    location:
+      classpath:banner.txt
+  application:
+    name: API_Gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+
+        - id: FOODCATALOGUE-SERVICE
+          uri: lb://FOODCATALOGUE-SERVICE
+#          uri: http://localhost:9093/
+          predicates:
+            - Path=/foodCatalogue/**
+
+
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+#          uri: http://localhost:9094/
+          predicates:
+            - Path=/order/**
+
+        - id: RESTAURANT-SERVICE
+          uri: lb://RESTAURANT-SERVICE
+#          uri: http://localhost:9091/
+          predicates:
+            - Path=/restaurant/**
+
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+#          uri: http://localhost:9092/
+          predicates:
+            - Path=/user/**
+
+
