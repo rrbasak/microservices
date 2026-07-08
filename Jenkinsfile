@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Build Eureka') {
             steps {
                 dir('eureka') {
@@ -64,14 +63,96 @@ pipeline {
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'dockerhub',
-                        usernameVariable: 'debianrajdeep',
-                        passwordVariable: 'raJ@20001612'
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
                     )
                 ]) {
-
-                    bat 'docker login -u %debianrajdeep% -p %raJ@20001612%'
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
                     bat 'docker push debianrajdeep/restaurantlisting-server:latest'
                 }
+            }
+        }
+        stage('Docker Build Eureka') {
+            steps {
+                dir('eureka') {
+                    bat 'docker build -t debianrajdeep/eureka-server:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push Eureka') {
+            steps {
+                bat 'docker push debianrajdeep/eureka-server:latest'
+            }
+        }
+
+        stage('Docker Build API Gateway') {
+            steps {
+                dir('API_Gateway') {
+                    bat 'docker build -t debianrajdeep/api-gateway:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push API Gateway') {
+            steps {
+                bat 'docker push debianrajdeep/api-gateway:latest'
+            }
+        }
+
+        stage('Docker Build Restaurant') {
+            steps {
+                dir('restaurentlisting') {
+                    bat 'docker build -t debianrajdeep/restaurantlisting-server:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push Restaurant') {
+            steps {
+                bat 'docker push debianrajdeep/restaurantlisting-server:latest'
+            }
+        }
+
+        stage('Docker Build UserInfo') {
+            steps {
+                dir('userinfo') {
+                    bat 'docker build -t debianrajdeep/userinfo-server:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push UserInfo') {
+            steps {
+                bat 'docker push debianrajdeep/userinfo-server:latest'
+            }
+        }
+
+        stage('Docker Build Food Catalogue') {
+            steps {
+                dir('foodCatalogue') {
+                    bat 'docker build -t debianrajdeep/foodcatalogue-server:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push Food Catalogue') {
+            steps {
+                bat 'docker push debianrajdeep/foodcatalogue-server:latest'
+            }
+        }
+
+        stage('Docker Build Order Service') {
+            steps {
+                dir('order') {
+                    bat 'docker build -t debianrajdeep/order-server:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push Order Service') {
+            steps {
+                bat 'docker push debianrajdeep/order-server:latest'
             }
         }
     }
