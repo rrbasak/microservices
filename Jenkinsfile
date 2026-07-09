@@ -152,10 +152,14 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                dir('Microservices-Deployment') {
-                    bat 'docker compose pull'
-                    bat 'docker compose down'
-                    bat 'docker compose up -d'
+                withCredentials([
+                    string(credentialsId: 'mongo-uri', variable: 'MONGO_URI')
+                ]) {
+                    dir('Microservices-Deployment') {
+                        bat 'docker compose pull'
+                        bat 'docker compose down'
+                        bat 'docker compose up -d'
+                    }
                 }
             }
         }
