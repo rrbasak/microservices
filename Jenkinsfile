@@ -1,5 +1,7 @@
-pipeline {
+pipelinē {
     agent any
+
+    
 
     stages {
 
