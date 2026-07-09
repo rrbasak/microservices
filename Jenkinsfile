@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Build Eureka') {
             steps {
                 dir('eureka') {
@@ -50,15 +51,7 @@ pipeline {
             }
         }
 
-        stage('Docker Build Restaurant') {
-            steps {
-                dir('restaurentlisting') {
-                    bat 'docker build -t debianrajdeep/restaurantlisting-server:latest .'
-                }
-            }
-        }
-
-        stage('Docker Push Restaurant') {
+        stage('Docker Login') {
             steps {
                 withCredentials([
                     usernamePassword(
@@ -68,10 +61,10 @@ pipeline {
                     )
                 ]) {
                     bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-                    bat 'docker push debianrajdeep/restaurantlisting-server:latest'
                 }
             }
         }
+
         stage('Docker Build Eureka') {
             steps {
                 dir('eureka') {
