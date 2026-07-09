@@ -150,5 +150,14 @@ pipeline {
                 bat 'docker push debianrajdeep/order-server:latest'
             }
         }
+        stage('Deploy') {
+            steps {
+                dir('Microservices-Deployment') {
+                    bat 'docker compose pull'
+                    bat 'docker compose down'
+                    bat 'docker compose up -d'
+                }
+            }
+        }
     }
 }
