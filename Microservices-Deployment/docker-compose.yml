@@ -82,10 +82,11 @@ services:
     ports:
       - "9094:9094"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/orderdb
-      SPRING_DATA_MONGODB_HOST: mongodb
-      SPRING_DATA_MONGODB_PORT: 27017
-      SPRING_DATA_MONGODB_DATABASE: orderdb
+      # SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/orderdb
+      # SPRING_DATA_MONGODB_HOST: mongodb
+      # SPRING_DATA_MONGODB_PORT: 27017
+      # SPRING_DATA_MONGODB_DATABASE: orderdb
+      SPRING_DATA_MONGODB_URI: mongodb+srv://rajdeepbasak2000_db_user:tp6HIKai6HGqE1B8@cluster0.gakxlxn.mongodb.net/orderdb?retryWrites=true&w=majority&appName=Cluster0
       
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
