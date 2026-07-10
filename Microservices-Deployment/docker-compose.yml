@@ -73,7 +73,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
   order-service:
-    image: debianrajdeep/order-server:latest
+    image: debianrajdeep/order-server:atlas-v1
     container_name: order-service
     restart: unless-stopped
     depends_on:

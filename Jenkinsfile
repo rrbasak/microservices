@@ -140,14 +140,14 @@ pipeline {
         stage('Docker Build Order Service') {
             steps {
                 dir('order') {
-                    bat 'docker build -t debianrajdeep/order-server:latest .'
+                    bat 'docker build -t debianrajdeep/order-server:atlas-v1 .'
                 }
             }
         }
 
         stage('Docker Push Order Service') {
             steps {
-                bat 'docker push debianrajdeep/order-server:latest'
+                bat 'docker push debianrajdeep/order-server:atlas-v1'
             }
         }
         stage('Deploy') {
